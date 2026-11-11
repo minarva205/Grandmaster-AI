@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grandmaster.AI — Next-Gen Chess Engine & Move Validator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <span>♟️</span> Grandmaster.AI
+        </div>
+        <div class="nav-links">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#how-it-works" class="nav-link">How It Works</a>
+            <a href="#tech" class="nav-link">About</a>
+            <!-- Language Dropdown -->
+            <div class="lang-switcher">
+                <button class="lang-btn" onclick="toggleLangMenu()" title="Change Language">🌐 Language</button>
+                <div class="lang-menu" id="langMenu">
+                    <div onclick="changeLang('en')">🇬🇧 English</div>
+                    <div onclick="changeLang('hi')">🇮🇳 Hindi</div>
+                    <div onclick="changeLang('ar')">🇸🇦 Arabic</div>
+                    <div onclick="changeLang('fr')">🇫🇷 French</div>
+                    <div onclick="changeLang('es')">🇪🇸 Spanish</div>
+                    <div onclick="changeLang('de')">🇩🇪 German</div>
+                    <div onclick="changeLang('zh-CN')">🇨🇳 Chinese</div>
+                    <div onclick="changeLang('ur')">🇵🇰 Urdu</div>
+                </div>
+            </div>
+            <!-- Hidden Google Translate Element -->
+            <div id="google_translate_element" style="display: none !important;"></div>
+        </div>
+        <div class="nav-actions">
+            <a href="playground.html" class="btn btn-secondary btn-sm">Public Sandbox 🎮</a>
+            <a href="login.html" class="btn btn-primary btn-sm">Sign In 🔐</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="section-badge">🚀 Free Chess Move Checker</div>
+        <h1>Check & Understand Chess Moves in <span class="gradient-text">Seconds</span></h1>
+        <p class="hero-subtitle">
+            Simply pick a chess piece, choose where it is and where it should go — and we'll instantly tell you if that move is allowed. Get smart tips too!
+        </p>
+        <div class="hero-buttons">
+            <a href="signup.html" class="btn btn-primary btn-lg">Create Free Account ⚡</a>
+            <a href="playground.html" class="btn btn-secondary btn-lg">Try Without Sign Up</a>
+        </div>
+
+        <!-- Live Statistics Counter -->
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number" id="movesCount">12,500+</div>
+                <div class="stat-label">Moves Validated</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="usersCount">3,400+</div>
+                <div class="stat-label">Active Chess Players</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="latencyCount">8ms</div>
+                <div class="stat-label">Super Fast Results</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Key Unique Features Section -->
+    <section id="features" class="section">
+        <div class="section-header">
+            <span class="section-badge">What We Offer</span>
+            <h2>Everything You Need to Play Better Chess</h2>
+            <p>Simple tools that help you learn and improve your chess game — no experience needed.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧩</div>
+                <h3>Move Check</h3>
+                <p>Instantly tells you if a move is allowed or not — based on official chess rules. No guessing needed!</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3>Smart Tips</h3>
+                <p>Get helpful suggestions on whether your move is a good one — like having a chess coach by your side.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3>Move History</h3>
+                <p>All your checked moves are saved so you can go back and review them anytime you want.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section" style="background: rgba(12, 16, 25, 0.4); border-top: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border);">
+        <div class="section-header">
+            <span class="section-badge">How It Works</span>
+            <h2>3 Simple Steps</h2>
+            <p>Getting an answer takes less than a second — it's really that easy.</p>
+        </div>
+
+        <div class="steps-container">
+            <div class="step-item">
+                <div class="step-number">01</div>
+                <h3>Pick Your Piece</h3>
+                <p>Choose which chess piece you want to move — like a Knight, Rook, or Queen. You can also click on the board or use your voice!</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">02</div>
+                <h3>Choose the Move</h3>
+                <p>Select where the piece is right now and where you want to move it.</p>
+            </div>
+            <div class="step-item">
+                <div class="step-number">03</div>
+                <h3>Get Your Answer</h3>
+                <p>We'll instantly tell you if the move is valid and give you a helpful tip on whether it's a smart move.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="tech" class="section">
+        <div class="section-header">
+            <span class="section-badge">About</span>
+            <h2>Why Grandmaster.AI?</h2>
+            <p>A fast, free, and easy-to-use tool built for chess lovers of all levels.</p>
+        </div>
+
+        <div class="tech-grid">
+            <div class="tech-card">
+                <div class="tech-icon">⚡</div>
+                <h4>Lightning Fast</h4>
+                <p>Results in under a second</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">🆓</div>
+                <h4>Free to Use</h4>
+                <p>No payment, no credit card</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">🔒</div>
+                <h4>Safe & Secure</h4>
+                <p>Your data stays private</p>
+            </div>
+            <div class="tech-card">
+                <div class="tech-icon">🎙️</div>
+                <h4>Voice Friendly</h4>
+                <p>Just speak your move!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-info">
+                <h3>♟️ Grandmaster.AI</h3>
+                <p>A simple and smart tool to check chess moves and improve your game.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Pages</h4>
+                <ul>
+                    <li><a href="playground.html">Try for Free</a></li>
+                    <li><a href="login.html">Sign In</a></li>
+                    <li><a href="signup.html">Create Account</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Status</h4>
+                <ul>
+                    <li><a href="#" style="pointer-events: none;"><span class="pulse-dot" style="display:inline-block; margin-right:4px;"></span> All Systems Running</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Grandmaster.AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Language Switcher Script -->
+    <script>
+        function toggleLangMenu() {
+            const menu = document.getElementById('langMenu');
+            menu.classList.toggle('open');
+        }
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.lang-switcher')) {
+                document.getElementById('langMenu').classList.remove('open');
+            }
+        });
+        function changeLang(lang) {
+            try {
+                const cookieVal = (lang === 'en') ? '' : '/en/' + lang;
+                document.cookie = "googtrans=" + cookieVal + "; path=/";
+                document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + window.location.hostname;
+                
+                var select = document.querySelector('select.goog-te-combo');
+                if (select) {
+                    select.value = lang;
+                    select.dispatchEvent(new Event('change'));
+                } else {
+                    location.reload();
+                }
+            } catch (e) {
+                console.error("Failed to change language: ", e);
+            }
+        }
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+        if (window.location.protocol === 'file:') {
+            console.warn("Google Translate widget requires a local server (http:// or https://) to function properly and set cookies. It won't work correctly when opened directly via file:// protocol.");
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Landing page script -->
+    <script src="script.js"></script>
+</body>
+</html>

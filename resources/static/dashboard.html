@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grandmaster.AI — Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-logo">
+                    <span>♟️</span> Grandmaster<span>.AI</span>
+                </div>
+
+                <div class="user-profile-box">
+                    <div class="user-avatar" id="avatarLetter">U</div>
+                    <div class="user-info">
+                        <span class="user-name" id="userNameLabel">Loading...</span>
+                        <span class="user-role">FIDE Challenger</span>
+                    </div>
+                </div>
+
+                <nav class="sidebar-nav">
+                    <div class="nav-item active" onclick="switchTab('sandbox')">🎮 Play & Check Moves</div>
+                    <div class="nav-item" onclick="switchTab('history')">📜 My Move History</div>
+                    <div class="nav-item" style="pointer-events: none; opacity: 0.5;">📊 Full Stats (PRO)</div>
+                </nav>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div class="lang-switcher">
+                    <button class="lang-btn" onclick="toggleLangMenu()" title="Change Language">🌐 Language</button>
+                    <div class="lang-menu" id="langMenu" style="right: auto; left: 0;">
+                        <div onclick="changeLang('en')">🇬🇧 English</div>
+                        <div onclick="changeLang('hi')">🇮🇳 Hindi</div>
+                        <div onclick="changeLang('ar')">🇸🇦 Arabic</div>
+                        <div onclick="changeLang('fr')">🇫🇷 French</div>
+                        <div onclick="changeLang('es')">🇪🇸 Spanish</div>
+                        <div onclick="changeLang('de')">🇩🇪 German</div>
+                        <div onclick="changeLang('zh-CN')">🇨🇳 Chinese</div>
+                        <div onclick="changeLang('ur')">🇵🇰 Urdu</div>
+                    </div>
+                </div>
+                <!-- Hidden Google Translate Element -->
+                <div id="google_translate_element" style="display: none !important;"></div>
+                <button class="btn btn-danger btn-full" onclick="handleLogout()">Sign Out 🚪</button>
+            </div>
+        </aside>
+
+        <!-- Main Panel Content -->
+        <main class="dashboard-main">
+            <header class="dashboard-header">
+                <div class="welcome-msg">
+                    <h1 id="welcomeTitle">Hello, Challenger</h1>
+                    <p>Your chess move checker is ready to use.</p>
+                </div>
+                <div class="header-actions">
+                    <div class="status-pill">
+                        <span class="pulse-dot"></span> Online & Ready
+                    </div>
+                </div>
+            </header>
+
+            <!-- Tabs Wrapper -->
+            <div id="sandboxTab">
+                <div class="sandbox-grid">
+                    <!-- Left: Interactive chessboard panel -->
+                    <div class="glass-card board-wrapper">
+                        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 20px; align-self: flex-start;">Chess Board</h3>
+                        
+                        <div class="board-container">
+                            <div class="board-labels-top">
+                                <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span>
+                            </div>
+                            <div class="board-row-container">
+                                <div class="board-labels-left">
+                                    <span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span>
+                                </div>
+                                <div class="dashboard-board" id="chessBoard"></div>
+                                <div class="board-labels-right">
+                                    <span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span>
+                                </div>
+                            </div>
+                            <div class="board-labels-bottom">
+                                <span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span>
+                            </div>
+                        </div>
+
+                        <div class="board-controls btn-full">
+                            <div class="form-group" style="grid-column: span 2;">
+                                <label class="form-label">Select Piece</label>
+                                <select class="form-input" id="piece">
+                                    <option value="KNIGHT">Knight (♘)</option>
+                                    <option value="PAWN">Pawn (♙)</option>
+                                    <option value="ROOK">Rook (♖)</option>
+                                    <option value="BISHOP">Bishop (♗)</option>
+                                    <option value="QUEEN">Queen (♕)</option>
+                                    <option value="KING">King (♔)</option>
+                                </select>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%;">
+                                <div class="form-group">
+                                    <label class="form-label">From Square</label>
+                                    <input type="text" class="form-input" id="fromSquare" value="g1" maxlength="2">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">To Square</label>
+                                    <input type="text" class="form-input" id="toSquare" value="f3" maxlength="2">
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary btn-full" style="margin-top: 10px;" onclick="testValidation()">Check This Move 🚀</button>
+
+                            <div class="voice-control-container">
+                                <button id="micBtn" class="btn btn-secondary voice-btn" onclick="toggleVoiceRecognition()">
+                                    <span id="micIcon">🎙️</span> Start Voice Control
+                                </button>
+                                <div id="voiceStatus" class="voice-status">Microphone Off — Click to speak your move (e.g. "Knight g1 to f3")</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: AI Analytics Panel -->
+                    <div class="glass-card">
+                        <div class="analytics-header">
+                            <h3 style="font-size: 1.15rem; font-weight: 700;">AI Move Advisor</h3>
+                            <div class="latency-badge" id="latency">0 ms</div>
+                        </div>
+
+                        <div class="analysis-status-box" id="statusBox">
+                            <div>
+                                <div style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase;">Move Quality</div>
+                                <div class="quality-title" id="qualityTitle">Awaiting Input</div>
+                            </div>
+                            <div class="badge" id="badgeTag">IDLE</div>
+                        </div>
+
+                        <div class="metrics-row">
+                            <div class="metric-box">
+                                <span class="m-label">Move Valid?</span>
+                                <span class="m-value" id="ruleStatus">--</span>
+                            </div>
+                            <div class="metric-box">
+                                <span class="m-label">Move Rating</span>
+                                <span class="m-value" id="evalScore">+0.00</span>
+                            </div>
+                            <div class="metric-box">
+                                <span class="m-label">Recommended</span>
+                                <span class="m-value" id="bestMove">N/A</span>
+                            </div>
+                        </div>
+
+                        <div class="ai-box">
+                            <h4>🧠 AI Explanation & Tips</h4>
+                            <p id="aiText">
+                                Click any square on the board or type the square names, then click "Check This Move".
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Telemetry History Tab -->
+            <div id="historyTab" style="display: none;" class="history-section">
+                <div class="glass-card history-card">
+                    <div class="history-header">
+                        <div>
+                            <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 4px;">My Move History</h3>
+                            <p style="color: var(--text-muted); font-size: 0.88rem;">All the moves you have checked, saved here for your review.</p>
+                        </div>
+                        <button class="btn btn-secondary btn-sm" onclick="loadHistory()">Refresh 🔄</button>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Piece</th>
+                                    <th>Move Path</th>
+                                    <th>Valid?</th>
+                                    <th>Move Rating</th>
+                                    <th>Score</th>
+                                    <th>Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 40px 0;">No moves checked yet. Go to "Play & Check Moves" to get started!</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Language Switcher Script -->
+    <script>
+        function toggleLangMenu() {
+            const menu = document.getElementById('langMenu');
+            menu.classList.toggle('open');
+        }
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.lang-switcher')) {
+                document.getElementById('langMenu').classList.remove('open');
+            }
+        });
+        function changeLang(lang) {
+            try {
+                const cookieVal = (lang === 'en') ? '' : '/en/' + lang;
+                document.cookie = "googtrans=" + cookieVal + "; path=/";
+                document.cookie = "googtrans=" + cookieVal + "; path=/; domain=" + window.location.hostname;
+                
+                var select = document.querySelector('select.goog-te-combo');
+                if (select) {
+                    select.value = lang;
+                    select.dispatchEvent(new Event('change'));
+                } else {
+                    location.reload();
+                }
+            } catch (e) {
+                console.error("Failed to change language: ", e);
+            }
+        }
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+        if (window.location.protocol === 'file:') {
+            console.warn("Google Translate widget requires a local server (http:// or https://) to function properly and set cookies. It won't work correctly when opened directly via file:// protocol.");
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Dashboard Controller script -->
+    <script src="dashboard.js"></script>
+</body>
+</html>

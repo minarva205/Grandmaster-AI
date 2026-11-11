@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grandmaster.AI — Loading Engine</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="loading.css">
+</head>
+<body>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div class="loading-screen" id="loadingScreen">
+        <div class="particles-container" id="particles"></div>
+
+        <div class="loading-logo">♟️</div>
+        <div class="loading-brand">Grandmaster<span class="highlight">.AI</span></div>
+        <div class="loading-subtitle">Initializing Chess AI Rules Validation Engine...</div>
+
+        <div class="loading-progress-container">
+            <div class="loading-progress-bar">
+                <div class="loading-progress-fill" id="fill"></div>
+            </div>
+            <div class="loading-percent" id="percent">0%</div>
+        </div>
+    </div>
+
+    <script>
+        // Progress counter script
+        const percentEl = document.getElementById('percent');
+        const screenEl = document.getElementById('loadingScreen');
+        let count = 0;
+
+        const interval = setInterval(() => {
+            count += Math.floor(Math.random() * 8) + 2;
+            if (count >= 100) {
+                count = 100;
+                clearInterval(interval);
+                percentEl.innerText = '100% - Ready';
+                
+                // Fade out screen
+                setTimeout(() => {
+                    screenEl.classList.add('fade-out');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 600);
+                }, 500);
+            } else {
+                percentEl.innerText = count + '%';
+            }
+        }, 120);
+
+        // Generate floating background particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDelay = Math.random() * 4 + 's';
+            particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>
